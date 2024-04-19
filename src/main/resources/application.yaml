@@ -13,5 +13,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
-key:
-  maxCar: 4
+car:
+  maxCars: 4
+  sorting:
+    - id
+    - carBrand
+    - color
+    - licensePlate

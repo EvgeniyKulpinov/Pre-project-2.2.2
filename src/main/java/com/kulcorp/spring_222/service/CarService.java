@@ -9,5 +9,5 @@ public interface CarService {
 
     void add(Car user);
 
-    List<Car> getAllLimited(int count, String value);
+    List<Car> getAllLimited(Integer count, String value);
 }
