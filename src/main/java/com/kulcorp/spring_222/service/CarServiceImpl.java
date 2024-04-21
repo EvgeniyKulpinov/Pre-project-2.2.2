@@ -4,7 +4,6 @@ import com.kulcorp.spring_222.config.CarConfig;
 import com.kulcorp.spring_222.dao.CarRepository;
 import com.kulcorp.spring_222.exception.AppException;
 import com.kulcorp.spring_222.model.Car;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,12 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-@NoArgsConstructor
 public class CarServiceImpl implements CarService {
 
-    private CarRepository carRepository;
+    private final CarRepository carRepository;
 
-    CarConfig config;
+    private final CarConfig config;
 
     @Autowired
     public CarServiceImpl(CarRepository carRepository, CarConfig config) {
@@ -39,15 +37,15 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getAllLimited(Integer count, String property) {
+    public List<Car> getAllLimited(Integer count, String sortBy) {
         if (count == null || count > config.getMaxCars() || count == 0) {
             count = config.getMaxCars();
         }
-        if (!Arrays.asList(config.getSorting()).contains(property)) {
+        if (!Arrays.asList(config.getSorting()).contains(sortBy)) {
             throw new AppException();
         }
         Page<Car> page = carRepository.findAll(
-                PageRequest.of(0, count, Sort.by(Sort.Order.asc(property))));
+                PageRequest.of(0, count, Sort.by(Sort.Order.asc(sortBy))));
         return page.getContent();
     }
 }

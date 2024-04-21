@@ -14,13 +14,13 @@
         <tr>
             <th>id</th>
             <th>Car brand</th>
-            <th>Color</th>
+            <th>Price</th>
             <th>License plate</th>
         </tr>
         <tr th:each="car : ${cars}">
             <td th:text=" ${car.getId()}"></td>
             <td th:text=" ${car.getCarBrand()}"></td>
-            <td th:text=" ${car.getColor()}"></td>
+            <td th:text=" ${car.getPrice()}"></td>
             <td th:text=" ${car.getLicensePlate()}"></td>
         </tr>
     </table>

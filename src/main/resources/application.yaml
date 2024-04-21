@@ -18,5 +18,8 @@ car:
   sorting:
     - id
     - carBrand
-    - color
+    - price
     - licensePlate
+loan:
+  minIncome: 40000
+  minPriseCar: 1000000

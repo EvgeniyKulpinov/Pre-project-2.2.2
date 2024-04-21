@@ -7,7 +7,7 @@ import java.util.List;
 public interface CarService {
     List<Car> getCars();
 
-    void add(Car user);
+    void add(Car car);
 
     List<Car> getAllLimited(Integer count, String value);
 }

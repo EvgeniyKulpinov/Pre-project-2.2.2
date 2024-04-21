@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @AllArgsConstructor
-public class CarsController {
+public class CarController {
 
     private CarService service;
 
     @RequestMapping(value = "/cars")
     public String getCars(@RequestParam(value = "count", required = false) Integer count,
-                          @RequestParam(value = "sortBy", required = false, defaultValue = "id") String property,
+                          @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
                           Model model) {
-        model.addAttribute("cars", service.getAllLimited(count, property));
+        model.addAttribute("cars", service.getAllLimited(count, sortBy));
         return "cars";
     }
 }

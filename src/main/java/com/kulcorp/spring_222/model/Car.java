@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cars")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Car {
     @Id
@@ -14,13 +15,16 @@ public class Car {
 
     private String carBrand;
 
-    private String color;
+    private int price;
 
     private String licensePlate;
 
-    public Car(String carBrand, String color, String licensePlate) {
+    @OneToOne(mappedBy = "car")
+    private User user;
+
+    public Car(String carBrand, int price, String licensePlate) {
         this.carBrand = carBrand;
-        this.color = color;
+        this.price = price;
         this.licensePlate = licensePlate;
     }
 }
