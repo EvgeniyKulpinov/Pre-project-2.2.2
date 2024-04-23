@@ -10,5 +10,5 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    String creditCalculator(Long id);
+    int IncomeClient(Long id);
 }

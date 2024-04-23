@@ -23,3 +23,4 @@ car:
 loan:
   minIncome: 40000
   minPriseCar: 1000000
+  url: "https://66055cd12ca9478ea1801f2e.mockapi.io/api/users/income"

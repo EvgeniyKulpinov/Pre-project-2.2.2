@@ -1,6 +1,6 @@
 package com.kulcorp.spring_222.controller;
 
-import com.kulcorp.spring_222.service.UserService;
+import com.kulcorp.spring_222.service.LoanService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @AllArgsConstructor
 public class UserController {
 
-    private UserService service;
+    private LoanService service;
 
     @RequestMapping(value = "/loan")
-    public String getCars(@RequestParam(value = "userId", required = false) Long id, Model model) {
+    public String creditCalculator(@RequestParam(value = "userId", required = false) Long id, Model model) {
         model.addAttribute("credit", service.creditCalculator(id));
         return "credit";
     }

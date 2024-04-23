@@ -1,8 +1,8 @@
 package com.kulcorp.spring_222.service;
 
-import com.kulcorp.spring_222.config.CarConfig;
+import com.kulcorp.spring_222.property.CarProperties;
 import com.kulcorp.spring_222.dao.CarRepository;
-import com.kulcorp.spring_222.exception.AppException;
+import com.kulcorp.spring_222.exception.SortingException;
 import com.kulcorp.spring_222.model.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,12 +18,12 @@ public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
 
-    private final CarConfig config;
+    private final CarProperties properties;
 
     @Autowired
-    public CarServiceImpl(CarRepository carRepository, CarConfig config) {
+    public CarServiceImpl(CarRepository carRepository, CarProperties properties) {
         this.carRepository = carRepository;
-        this.config = config;
+        this.properties = properties;
     }
 
     @Override
@@ -38,11 +38,11 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> getAllLimited(Integer count, String sortBy) {
-        if (count == null || count > config.getMaxCars() || count == 0) {
-            count = config.getMaxCars();
+        if (count == null || count > properties.getMaxCars() || count == 0) {
+            count = properties.getMaxCars();
         }
-        if (!Arrays.asList(config.getSorting()).contains(sortBy)) {
-            throw new AppException();
+        if (!Arrays.asList(properties.getSorting()).contains(sortBy)) {
+            throw new SortingException();
         }
         Page<Car> page = carRepository.findAll(
                 PageRequest.of(0, count, Sort.by(Sort.Order.asc(sortBy))));

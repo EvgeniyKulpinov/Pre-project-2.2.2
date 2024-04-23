@@ -1,10 +1,11 @@
 package com.kulcorp.spring_222.service;
 
-import com.kulcorp.spring_222.config.UserConfig;
+import com.kulcorp.spring_222.property.UserProperties;
 import com.kulcorp.spring_222.dao.UserRepository;
 import com.kulcorp.spring_222.model.Car;
 import com.kulcorp.spring_222.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,20 +19,19 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final UserConfig config;
+    private final UserProperties properties;
 
     @Autowired
-    public UserServiceImpl(RestTemplate restTemplate, UserRepository userRepository, UserConfig config) {
+    public UserServiceImpl(RestTemplate restTemplate, UserRepository userRepository, UserProperties properties) {
         this.restTemplate = restTemplate;
         this.userRepository = userRepository;
-        this.config = config;
+        this.properties = properties;
     }
 
     @Override
     public void add(List<Car> cars) {
         User[] users = restTemplate
-                .getForObject("https://66055cd12ca9478ea1801f2e.mockapi.io/api/users/income", User[].class);
-        assert users != null;
+                .getForObject(properties.getUrl(), User[].class);
         int i = 0;
         for (User user : users) {
             user.setCar(cars.get(i));
@@ -46,16 +46,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String creditCalculator(Long id) {
-        User user = getUserById(id);
-        if (user.getIncome() > config.getMinIncome() || user.getCar().getPrice() > config.getMinPriseCar()) {
-            int value1 = user.getIncome() * 6;
-            int value2 = (int) (user.getCar().getPrice() * 0.3);
-            if (value1 > value2) {
-                return "Сумма кредита: " + value1;
-            }
-            return "Сумма кредита: " + value2;
-        }
-        return "Кредит не одобрен";
+    public int IncomeClient(Long id) {
+        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity(properties.getUrl(), Object[].class);
+        Object[] objects = responseEntity.getBody();
+        String[] strings = Arrays.stream(objects)
+                .filter(p -> p.toString().contains("id=" + id))
+                .findFirst()
+                .get()
+                .toString()
+                .split("income=");
+        return Integer.parseInt(strings[1].replace("}", ""));
     }
 }

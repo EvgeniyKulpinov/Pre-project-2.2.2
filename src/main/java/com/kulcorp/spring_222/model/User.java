@@ -12,8 +12,6 @@ public class User {
     @Id
     private Long id;
 
-    private int income;
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Car car;
 }
