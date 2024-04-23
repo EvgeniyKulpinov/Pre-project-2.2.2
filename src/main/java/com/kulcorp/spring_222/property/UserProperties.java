@@ -17,6 +17,10 @@ public class UserProperties {
 
     private String url;
 
+    private int halfAnnualIncome;
+
+    private Double coeffCostCar;
+
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();

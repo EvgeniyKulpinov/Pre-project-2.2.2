@@ -20,8 +20,8 @@ public class LoanServiceImpl implements LoanService{
         User user = userService.getUserById(id);
         if (userService.IncomeClient(id) > properties.getMinIncome() ||
                 user.getCar().getPrice() > properties.getMinPriseCar()) {
-            int value1 = userService.IncomeClient(id) * 6;
-            int value2 = (int) (user.getCar().getPrice() * 0.3);
+            int value1 = userService.IncomeClient(id) * properties.getHalfAnnualIncome();
+            int value2 = (int) (user.getCar().getPrice() * properties.getCoeffCostCar());
             if (value1 > value2) {
                 return "Сумма кредита: " + value1;
             }
