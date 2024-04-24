@@ -10,8 +10,13 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Car car;
+
+    public User(Car car) {
+        this.car = car;
+    }
 }

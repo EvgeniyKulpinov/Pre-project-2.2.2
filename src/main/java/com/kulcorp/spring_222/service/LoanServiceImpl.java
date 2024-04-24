@@ -5,7 +5,7 @@ import com.kulcorp.spring_222.property.UserProperties;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoanServiceImpl implements LoanService{
+public class LoanServiceImpl implements LoanService {
     private final UserService userService;
 
     private final UserProperties properties;
@@ -18,10 +18,14 @@ public class LoanServiceImpl implements LoanService{
     @Override
     public String creditCalculator(Long id) {
         User user = userService.getUserById(id);
+        int carPrise = 0;
+        if (user.getCar() != null) {
+            carPrise = user.getCar().getPrice();
+        }
         if (userService.IncomeClient(id) > properties.getMinIncome() ||
-                user.getCar().getPrice() > properties.getMinPriseCar()) {
+                carPrise > properties.getMinPriseCar()) {
             int value1 = userService.IncomeClient(id) * properties.getHalfAnnualIncome();
-            int value2 = (int) (user.getCar().getPrice() * properties.getCoeffCostCar());
+            int value2 = (int) (carPrise * properties.getCoeffCostCar());
             if (value1 > value2) {
                 return "Сумма кредита: " + value1;
             }

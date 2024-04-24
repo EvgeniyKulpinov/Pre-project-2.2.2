@@ -1,16 +1,15 @@
 package com.kulcorp.spring_222.service;
 
+import com.kulcorp.spring_222.dto.DtoUser;
 import com.kulcorp.spring_222.property.UserProperties;
 import com.kulcorp.spring_222.dao.UserRepository;
-import com.kulcorp.spring_222.model.Car;
 import com.kulcorp.spring_222.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,15 +28,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void add(List<Car> cars) {
-        User[] users = restTemplate
-                .getForObject(properties.getUrl(), User[].class);
-        int i = 0;
-        for (User user : users) {
-            user.setCar(cars.get(i));
-            i++;
-        }
-        userRepository.saveAll(Arrays.asList(users));
+    public void add(User user) {
+        userRepository.save(user);
     }
 
     @Override
@@ -47,14 +39,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int IncomeClient(Long id) {
-        ResponseEntity<Object[]> responseEntity = restTemplate.getForEntity(properties.getUrl(), Object[].class);
-        Object[] objects = responseEntity.getBody();
-        String[] strings = Arrays.stream(objects)
-                .filter(p -> p.toString().contains("id=" + id))
-                .findFirst()
-                .get()
-                .toString()
-                .split("income=");
-        return Integer.parseInt(strings[1].replace("}", ""));
+        try {
+            DtoUser[] usres = restTemplate.getForObject(properties.getUrl(), DtoUser[].class);
+            return Arrays.stream(usres)
+                    .filter(p -> p.getId().equals(id))
+                    .findFirst()
+                    .get()
+                    .getIncome();
+        } catch (NoSuchElementException e) {
+            return 0;
+        }
     }
 }
