@@ -8,24 +8,27 @@ import org.springframework.stereotype.Service;
 public class LoanServiceImpl implements LoanService {
     private final UserService userService;
 
+    private final IncomeService incomeService;
+
     private final UserProperties properties;
 
-    public LoanServiceImpl(UserService userService, UserProperties properties) {
+    public LoanServiceImpl(UserService userService, UserProperties properties,IncomeService incomeService) {
         this.userService = userService;
         this.properties = properties;
+        this.incomeService = incomeService;
     }
 
     @Override
-    public String creditCalculator(Long id) {
+    public String creditCalculator(long id) {
         User user = userService.getUserById(id);
         int carPrise = 0;
         if (user.getCar() != null) {
             carPrise = user.getCar().getPrice();
         }
-        if (userService.IncomeClient(id) > properties.getMinIncome() ||
+        if (incomeService.getIncome(id) > properties.getMinIncome() ||
                 carPrise > properties.getMinPriseCar()) {
-            int value1 = userService.IncomeClient(id) * properties.getHalfAnnualIncome();
-            int value2 = (int) (carPrise * properties.getCoeffCostCar());
+            double value1 = incomeService.getIncome(id) * properties.getHalfAnnualIncome();
+            double value2 = (carPrise * properties.getCoeffCostCar());
             if (value1 > value2) {
                 return "Сумма кредита: " + value1;
             }
