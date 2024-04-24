@@ -1,6 +1,6 @@
 package com.kulcorp.spring_222.service;
 
-import com.kulcorp.spring_222.dto.DtoUser;
+import com.kulcorp.spring_222.dto.UserDto;
 import com.kulcorp.spring_222.property.UserProperties;
 import com.kulcorp.spring_222.dao.UserRepository;
 import com.kulcorp.spring_222.model.User;
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int IncomeClient(Long id) {
         try {
-            DtoUser[] usres = restTemplate.getForObject(properties.getUrl(), DtoUser[].class);
+            UserDto[] usres = restTemplate.getForObject(properties.getUrl(), UserDto[].class);
             return Arrays.stream(usres)
                     .filter(p -> p.getId().equals(id))
                     .findFirst()
