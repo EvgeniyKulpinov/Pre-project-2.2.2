@@ -3,19 +3,19 @@ package com.kulcorp.spring_222.controller;
 import com.kulcorp.spring_222.service.LoanService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @AllArgsConstructor
-public class UserController {
+public class LoanController {
 
     private LoanService service;
 
     @RequestMapping(value = "/loan")
-    public String creditCalculator(@RequestParam(value = "userId", required = false) Long id, Model model) {
-        model.addAttribute("credit", service.creditCalculator(id));
-        return "credit";
+    @ResponseBody
+    public double creditCalculator(@RequestParam(value = "userId", required = false) Long id) {
+        return service.creditCalculator(id);
     }
 }

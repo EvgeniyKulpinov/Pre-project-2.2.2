@@ -2,27 +2,20 @@ package com.kulcorp.spring_222.property;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @ConfigurationProperties("loan")
 @Data
-public class UserProperties {
+public class LoanProperties {
 
     private int minIncome;
 
-    private int minPriseCar;
+    private int minPriceCar;
 
     private String url;
 
     private int halfAnnualIncome;
 
     private Double coeffCostCar;
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 }

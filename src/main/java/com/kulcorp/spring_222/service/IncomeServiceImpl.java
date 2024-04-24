@@ -1,7 +1,7 @@
 package com.kulcorp.spring_222.service;
 
 import com.kulcorp.spring_222.dto.UserDto;
-import com.kulcorp.spring_222.property.UserProperties;
+import com.kulcorp.spring_222.property.LoanProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,9 +12,9 @@ public class IncomeServiceImpl implements IncomeService {
 
     private final RestTemplate restTemplate;
 
-    private final UserProperties properties;
+    private final LoanProperties properties;
 
-    public IncomeServiceImpl(RestTemplate restTemplate, UserProperties properties) {
+    public IncomeServiceImpl(RestTemplate restTemplate, LoanProperties properties) {
         this.restTemplate = restTemplate;
         this.properties = properties;
     }
