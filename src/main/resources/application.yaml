@@ -23,6 +23,5 @@ car:
 loan:
   minIncome: 40000
   minPriceCar: 1000000
-  url: https://66055cd12ca9478ea1801f2e.mockapi.io/api/users/income
   halfAnnualIncome: 6
   coeffCostCar: 0.3

@@ -13,8 +13,6 @@ public class LoanProperties {
 
     private int minPriceCar;
 
-    private String url;
-
     private int halfAnnualIncome;
 
     private Double coeffCostCar;
